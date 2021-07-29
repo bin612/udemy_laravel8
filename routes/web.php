@@ -14,11 +14,11 @@ use Whoops\Run;
 |
 */
 
+//name
 Route::get('/', function () {
     return view('welcome');
 })->name('home.index');
 
-//이름은 같게 성정해주는 것 이 제알 좋다
 Route::get('/contact', function () {
     return "Contact";
 })->name('home.contact');
