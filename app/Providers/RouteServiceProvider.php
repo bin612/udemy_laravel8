@@ -47,6 +47,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        // 라우트 파라미터가 항상 주어진 정규표현식으로 제약을 가지게 된다면, pattern 메소드를 사용할 수 있습니다. 이 패턴들은 RouteServiceProvider의 boot 메소드 안에서 사용해야 합니다.
+        Route::pattern('id', '[0-9]+');
+
+        parent::boot();
     }
 
     /**
