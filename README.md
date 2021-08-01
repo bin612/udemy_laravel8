@@ -9,4 +9,4 @@
 
 ## laravel udemy study
 
-- **[Route](./routes/web.php)** route parameter 기본 사용법 
+- **[Route](./routes/web.php)**
