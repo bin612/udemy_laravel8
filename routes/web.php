@@ -14,9 +14,10 @@ use Whoops\Run;
 |
 */
 
-//name
+//view(home(폴더).index(파일))
+// 실제로 홈 디렉토리에있는 인덱스 파일을 읽어 출력 할 수 있다..
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
 })->name('home.index');
 
 Route::get('/contact', function () {
