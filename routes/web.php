@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Psy\CodeCleaner\IssetPass;
 use Whoops\Run;
 
 /*
@@ -25,7 +26,21 @@ Route::get('/contact', function () {
 })->name('home.contact');
 
 Route::get('/posts/{id}', function ($id) {
-    return 'Blog post '. $id;
+    
+    $posts = [
+        1 => [
+            'title' => 'Intro to Laravel',
+            'content' => 'This is a short intro to Laravel'
+        ],
+        2 => [
+            'title' => 'Intro to PHP',
+            'content' => 'This is a short intro to PHP'
+        ]
+    ];
+
+    abort_if(!isset($posts[$id]), 404);
+
+    return view('posts.show', ['post' => $posts[$id]]);
 })->name('posts.show');
 
 // {} 매개변수(파라미터) 로 값을  함수의 ($value)  인자로  넘겨주면  variable routng설정이 가능함
