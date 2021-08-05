@@ -10,3 +10,4 @@
 ## laravel udemy study
 
 - **[Route](./routes/web.php)**
+- **[Blade](./resources/views/home/index.blade.php)**
