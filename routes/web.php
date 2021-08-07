@@ -44,7 +44,7 @@ Route::get('/posts/{id}', function ($id) {
         2 => [
             'title' => 'Intro to PHP',
             'content' => 'This is a short intro to PHP',
-            'is_new' => false
+            'is_new' => false,
         ]
     ];
 
