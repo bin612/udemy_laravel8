@@ -5,25 +5,19 @@
 @section('content')
 
 {{-- foreach문 --}}
-    {{-- @foreach ( $posts as $key => $post )
+    {{--  @foreach ( $posts as $key => $post )
         <div>{{ $key }}.{{  $post['title'] }}</div>
-    @endforeach --}}
+    @endforeach  --}}
 
-@forelse ($posts as $key => $post)
+{{--  @forelse ($posts as $key => $post)  --}}
 
-{{-- break $key == 2라고 한다면 1을 출력하고 2에서 멈출 것이다. --}}
-{{-- @break($key == 2) --}}
+@each('posts.partials.post', $posts ,'post' )
 
-{{-- @continue 반복문을 멈추지 않고 현재 부분을 건너뛰고 다음 단계로 진행  --}}
-{{-- @continue($key == 1) --}}
-@if ($loop->even)
-    <div>{{ $key }}.{{ $post['title'] }}</div>
-@else
-    <div style="background-color: silver">{{ $key }}.{{  $post['title'] }}</div>
-@endif
+{{--  include가 있던 곳에서 사용할 수 있었던  모든 변수를 상속합니다.   include를 하게 되면 모든 변수가 상속이되어 사용가능해진다.--}}
+        {{--  @include('posts.partials.post')
 
 @empty
     No posts found!
-@endforelse    
+@endforelse      --}}
 
 @endsection
