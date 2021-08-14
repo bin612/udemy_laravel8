@@ -72,3 +72,19 @@ Route::get('/fun/responses', function() use($posts){
         ->header('Content-Type', 'application/json')
         ->cookie('MY_COOKIE', 'kim bin', 3600);
 });
+
+Route::get('/fun/redirect', function () {
+    return redirect('/contact');
+});
+
+Route::get('fun/back', function () {
+    return back();
+});
+
+Route::get('fun/name-route', function () {
+    return redirect()->route('posts.show', ['id' => 1]);
+});
+
+Route::get('fun/away', function () {
+    return redirect()->away('https://google.com');
+});
