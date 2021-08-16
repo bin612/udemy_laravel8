@@ -11,4 +11,5 @@
 
 - **[Route](./routes/web.php)**
 - **[Blade](./resources/views/home/index.blade.php)**
--**[loop](./resources/views/posts/index.blade.php)**
+- **[loop](./resources/views/posts/index.blade.php)**
+- **[redirect](./routes/web.php)**
