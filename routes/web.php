@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Psy\CodeCleaner\IssetPass;
 use Whoops\Run;
@@ -52,6 +53,7 @@ $posts = [
 ];
 
 Route::get('/posts', function() use($posts){
+    dd(request()->all());
     return view('posts.index', ['posts' => $posts]);
 });
 
@@ -67,24 +69,37 @@ Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
 })->name('posts.recent.index');
 
 
-Route::get('/fun/responses', function() use($posts){
-    return response($posts, 201)
-        ->header('Content-Type', 'application/json')
-        ->cookie('MY_COOKIE', 'kim bin', 3600);
+//  fun URL 그룹화
+Route::prefix('/fun')->name('fun.')->group(function() use($posts) {
+
+    Route::get('responses', function() use($posts){
+        return response($posts, 201)
+            ->header('Content-Type', 'application/json')
+            ->cookie('MY_COOKIE', 'kim bin', 3600);
+    })->name('responses');
+    
+    Route::get('redirect', function () {
+        return redirect('/contact');
+    })->name('redirect');
+    
+    Route::get('back', function () {
+        return back();
+    })->name('back');
+    
+    Route::get('name-route', function () {
+        return redirect()->route('posts.show', ['id' => 1]);
+    })->name('name-route');
+    
+    Route::get('away', function () {
+        return redirect()->away('https://google.com');
+    })->name('away');
+    
+    Route::get('json', function () use($posts){
+        return response()->json($posts); 
+    })->name('json');
+    
+    Route::get('download', function () use($posts){
+        return response()->download(public_path('/daniel.jpg'), 'face.jpg'); 
+    })->name('download');
 });
 
-Route::get('/fun/redirect', function () {
-    return redirect('/contact');
-});
-
-Route::get('fun/back', function () {
-    return back();
-});
-
-Route::get('fun/name-route', function () {
-    return redirect()->route('posts.show', ['id' => 1]);
-});
-
-Route::get('fun/away', function () {
-    return redirect()->away('https://google.com');
-});
