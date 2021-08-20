@@ -52,6 +52,7 @@ $posts = [
     ]
 ];
 
+// 수정
 Route::get('/posts', function() use($posts){
     dd(request()->all());
     return view('posts.index', ['posts' => $posts]);
