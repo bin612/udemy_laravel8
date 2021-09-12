@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,38 +34,31 @@ Route::get('/',[HomeController::class, 'home'])
 Route::get('/contact',[HomeController::class, 'contact'])
 ->name('home.contact');
 
-$posts = [
-    1 => [
-        'title' => 'Intro to Laravel',
-        'content' => 'This is a short intro to Laravel',
-        'is_new' => true,
-        'has_comments' => true
-    ],
-    2 => [
-        'title' => 'Intro to PHP',
-        'content' => 'This is a short intro to PHP',
-        'is_new' => false,
-    ],
-    3 => [
-        'title' => 'Intro to Golang',
-        'content' => 'This is a short intro to Golang',
-        'is_new' => false,
-    ]
-];
+Route::get('/single', \App\Http\Controllers\AboutController::class);
 
-// 수정
-Route::get('/posts', function() use($posts){
-//    dd(request()->all());
-//    dd((int)request()->query('page', 1));
-    dd((int)request()->input('page', 1));
-    return view('posts.index', ['posts' => $posts]);
-});
 
-Route::get('/posts/{id}', function ($id) use($posts){
-    abort_if(!isset($posts[$id]), 404);
 
-    return view('posts.show', ['post' => $posts[$id]]);
-})->name('posts.show');
+//2개만 사용하겠다
+Route::resource('posts', \App\Http\Controllers\PostController::class)->only(['index','show']);
+
+//2개만 사용하지 않겠다
+//Route::resource('posts', \App\Http\Controllers\PostController::class)->except(['index','show']);
+
+
+//
+//// 수정
+//Route::get('/posts', function() use($posts){
+////    dd(request()->all());
+////    dd((int)request()->query('page', 1));
+//    dd((int)request()->input('page', 1));
+//    return view('posts.index', ['posts' => $posts]);
+//});
+//
+//Route::get('/posts/{id}', function ($id) use($posts){
+//    abort_if(!isset($posts[$id]), 404);
+//
+//    return view('posts.show', ['post' => $posts[$id]]);
+//})->name('posts.show');
 
 // {} 매개변수(파라미터) 로 값을  함수의 ($value)  인자로  넘겨주면  variable routng설정이 가능함
 Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
@@ -74,36 +67,36 @@ Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
 
 
 //  fun URL 그룹화
-Route::prefix('/fun')->name('fun.')->group(function() use($posts) {
-
-    Route::get('responses', function() use($posts){
-        return response($posts, 201)
-            ->header('Content-Type', 'application/json')
-            ->cookie('MY_COOKIE', 'kim bin', 3600);
-    })->name('responses');
-
-    Route::get('redirect', function () {
-        return redirect('/contact');
-    })->name('redirect');
-
-    Route::get('back', function () {
-        return back();
-    })->name('back');
-
-    Route::get('name-route', function () {
-        return redirect()->route('posts.show', ['id' => 1]);
-    })->name('name-route');
-
-    Route::get('away', function () {
-        return redirect()->away('https://google.com');
-    })->name('away');
-
-    Route::get('json', function () use($posts){
-        return response()->json($posts);
-    })->name('json');
-
-    Route::get('download', function () use($posts){
-        return response()->download(public_path('/daniel.jpg'), 'face.jpg');
-    })->name('download');
-});
+//Route::prefix('/fun')->name('fun.')->group(function() use($posts) {
+//
+//    Route::get('responses', function() use($posts){
+//        return response($posts, 201)
+//            ->header('Content-Type', 'application/json')
+//            ->cookie('MY_COOKIE', 'kim bin', 3600);
+//    })->name('responses');
+//
+//    Route::get('redirect', function () {
+//        return redirect('/contact');
+//    })->name('redirect');
+//
+//    Route::get('back', function () {
+//        return back();
+//    })->name('back');
+//
+//    Route::get('name-route', function () {
+//        return redirect()->route('posts.show', ['id' => 1]);
+//    })->name('name-route');
+//
+//    Route::get('away', function () {
+//        return redirect()->away('https://google.com');
+//    })->name('away');
+//
+//    Route::get('json', function () use($posts){
+//        return response()->json($posts);
+//    })->name('json');
+//
+//    Route::get('download', function () use($posts){
+//        return response()->download(public_path('/daniel.jpg'), 'face.jpg');
+//    })->name('download');
+//});
 
